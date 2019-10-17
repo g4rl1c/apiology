@@ -15,34 +15,17 @@ class Init extends Headers
 
 	const HOME = 'home';
 
-	function __construct()
+	public function __construct()
 	{
 
-		// $this->header = new Headers();
-
-		switch ($_SERVER['REQUEST_METHOD']) {
-			case 'GET':
-				$this->request_resource = empty($_GET) ? self::HOME : self::get_uri($_SERVER['REQUEST_URI']);
-				break;
-
-			case 'POST':
-				$this->request_resource = empty($_POST) ? self::HOME : self::get_uri($_SERVER['REQUEST_URI']);
-				break;
-
-			case 'PUT':
-				$this->request_resource = empty($_PUT) ? self::HOME : self::get_uri($_SERVER['REQUEST_URI']);
-				break;
-
-			case 'DELETE':
-				$this->request_resource = empty($_DELETE) ? self::HOME : self::get_uri($_SERVER['REQUEST_URI']);
-				break;
-			
-			default:
-				$this->request_resource = parent::client_error_404();
-				break;
+		if($_SERVER['REQUEST_URI'] == "/")
+		{
+			parent::get_header(200, true, "No Resource found, please enter a resource");
 		}
-
-		self::get_resource($this->request_resource);
+		else
+		{
+			self::get_resource(self::get_uri($_SERVER['REQUEST_URI']));
+		}
 		
 	}
 
@@ -61,27 +44,35 @@ class Init extends Headers
 			$this->resource = "Apiology\\Resource\\{$this->resource}";
 			$this->resource = new $this->resource();
 
-
-			if(method_exists($this->resource, $_resource[1]) && is_callable($_resource[1], true, $method))
+			if(count($_resource) == 1)
 			{
-				if(count($_resource) > 2)
-				{
-					$this->resource->$method(self::get_subresources($_resource));
-				}
-				else
-				{
-					$this->resource->$method();
-				}
-				
+				$this->resource->main();
 			}
 			else
 			{
-				$this->resource->main();
+				if(count($_resource) > 1)
+				{
+					if(method_exists($this->resource, $_resource[1]) && is_callable($_resource[1], true, $method))
+					{
+						if(count($_resource) > 2)
+						{
+							$this->resource->$method(self::get_subresources($_resource));
+						}
+						else
+						{
+							$this->resource->$method();
+						}
+					}
+					else
+					{
+						parent::get_header(404, true, "No Resource found");
+					}
+				}
 			}
 		}
 		else
 		{
-			parent::client_error_404();
+			parent::get_header(404, true, "No Resource found");
 		}
 	}
 
