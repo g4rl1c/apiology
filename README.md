@@ -41,11 +41,15 @@ Example:
 Headers were set in a file called headersClass.php, instantiated inside the ***Init()*** Class and with its namespace declared, so no need to instantiated
 
 Hints about Headers
+
 	1. To use it just call the ***get_header()*** method. 
 
 	2. This method requires 3 parameters except the one by default **Code Client Error 417**
 
-	3. ```parent::get_header(int [HTTP Status Code], boolean [true/false [ true = with message, false = no message (followed by null as the next parameter)]], string/null ["Custom Message for the JSON Message [or null for no message and if its set to false in the previous parameter]"])```
+	3. 
+	```
+	parent::get_header(int [HTTP Status Code], boolean [true/false [ true = with message, false = no message (followed by null as the next parameter)]], string/null ["Custom Message for the JSON Message [or null for no message and if its set to false in the previous parameter]"])
+	```
 
 Example:
 ``` 
