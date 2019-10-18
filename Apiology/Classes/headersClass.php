@@ -18,7 +18,25 @@ class Headers
 
 			case '201':
 
-				self::scode_201($_return_json);
+				self::scode_201($_return_json, $_return_message);
+
+				break;
+
+			case '202':
+
+				self::scode_202($_return_json, $_return_message);
+
+				break;
+
+			case '204':
+
+				self::scode_204($_return_json, $_return_message);
+
+				break;
+
+			case '304':
+
+				self::scode_304($_return_json, $_return_message);
 
 				break;
 
@@ -28,14 +46,44 @@ class Headers
 
 				break;
 
+			case '401':
+
+				self::code_401($_return_json, $_return_message);
+
+				break;
+
+			case '403':
+
+				self::code_403($_return_json, $_return_message);
+
+				break;
+
 			case '404':
 
 				self::code_404($_return_json, $_return_message);
 
 				break;
+
+			case '406':
+
+				self::code_406($_return_json, $_return_message);
+
+				break;
+
+			case '408':
+
+				self::code_408($_return_json, $_return_message);
+
+				break;
+
+			case '409':
+
+				self::code_409($_return_json, $_return_message);
+
+				break;
 			
 			default:
-				self::code_404();
+				self::code_417();
 				break;
 		}
 	}
