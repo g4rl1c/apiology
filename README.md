@@ -65,6 +65,6 @@ parent::get_header(200, true, "It's all good!");
 --------------------
 
 ## Contributing
-Always available to improve, so if you want to contribute just fork it and let me know.
+Always available to improve, so if you want to contribute just create a branch and let me know.
 
 Thanks!!!!
