@@ -42,9 +42,9 @@ Headers were set in a file called headersClass.php, instantiated inside the ***I
 
 Hints about Headers
 
-	1. To use it just call the ***get_header()*** method. 
+1. To use it just call the ***get_header()*** method. 
 
-	2. This method requires 3 parameters except the one by default **Code Client Error 417**
+2. This method requires 3 parameters except the one by default **Code Client Error 417**
 
 ```php
 parent::get_header(int, boolean, string)
