@@ -23,17 +23,17 @@ If a method with parameters is needed, use the sample_method_two() structure cod
 Example:
 
 ``` 
-	public function sample_method()
+public function sample_method()
+{
+	if($_SERVER['REQUEST_METHOD'] == 'GET')
 	{
-		if($_SERVER['REQUEST_METHOD'] == 'GET')
-		{
-			#Code...
-		}
-		else
-		{
-			parent::get_header(400, true, "We only accept GET Requests");
-		}
+		#Code...
 	}
+	else
+	{
+		parent::get_header(400, true, "We only accept GET Requests");
+	}
+}
 ```
 
 
@@ -46,14 +46,19 @@ Hints about Headers
 
 	2. This method requires 3 parameters except the one by default **Code Client Error 417**
 
-	3. 
-	```
-	parent::get_header(int [HTTP Status Code], boolean [true/false [ true = with message, false = no message (followed by null as the next parameter)]], string/null ["Custom Message for the JSON Message [or null for no message and if its set to false in the previous parameter]"])
-	```
+```
+parent::get_header(int, boolean, string)
+```
+
+	- int [HTTP Status Code]: use HTTP status Code to identify the header
+	- bolean: true/false
+		- true: with a JSON message
+		- false: with no message. Important: it needs to be followed by null in the next parameter
+	- string/null: Use a string to give a message or null if you set false
 
 Example:
 ``` 
-	parent::get_header(200, true, "It's all good!");
+parent::get_header(200, true, "It's all good!");
 ```
 
 
