@@ -36,25 +36,25 @@ class Init extends Headers
 
 	private function get_resource($_resource)
 	{
-		$this->file = APIOLOGY . RESOURCES . $_resource[0] . '.php';
+		$this->file = APIOLOGY . RESOURCES . $_resource[2] . '.php';
 		if(file_exists($this->file))
 		{
 			require $this->file;
-			$this->resource = ucfirst($_resource[0]);
+			$this->resource = ucfirst($_resource[2]);
 			$this->resource = "Apiology\\Resource\\{$this->resource}";
 			$this->resource = new $this->resource();
 
-			if(count($_resource) == 1)
+			if(count($_resource) == 3)
 			{
 				$this->resource->main();
 			}
 			else
 			{
-				if(count($_resource) > 1)
+				if(count($_resource) > 3)
 				{
-					if(method_exists($this->resource, $_resource[1]) && is_callable($_resource[1], true, $method))
+					if(method_exists($this->resource, $_resource[3]) && is_callable($_resource[3], true, $method))
 					{
-						if(count($_resource) > 2)
+						if(count($_resource) > 4)
 						{
 							$this->resource->$method(self::get_subresources($_resource));
 						}

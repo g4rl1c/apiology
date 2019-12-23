@@ -3,7 +3,9 @@ PHP REST API FrameWork
 
 ## Getting Started
 
-If it's going to be used in a path different as in the *root (/)*, change the ***RewriteBase*** from the .htaccess to the path that is going to be used
+By convention every API path should have its version so the Root path of this framework should eb always /api/vX/
+
+If it's going to be used in a path different as in the *root (/api/vX/)*, change the ***RewriteBase*** from the .htaccess to the path that is going to be used
 
 
 ## How to use it
