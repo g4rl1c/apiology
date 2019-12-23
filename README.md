@@ -10,7 +10,7 @@ If it's going to be used in a path different as in the *root (/)*, change the **
 This API uses REST JSON via HTTP, so every message should be in a JSON format
 
 ### Resources
-Each resource will be a class sindie the *Apiology/Resources* folder. Just set up a class with its own name just as shown in the sample.php Class.
+Each resource will be a class inside the *Apiology/Resources* folder. Just set up a class with its own name just as shown in the sample.php Class.
 
 
 ### Methods
@@ -18,7 +18,7 @@ The main Method inisde each class should be main() which do not need to get any 
 
 If a method with parameters is needed, use the sample_method_two() structure code provided in the ***Sample*** Class
 
-- Handle HTTP REQUEST METHODS isnide each method, so for example, if only a method GET allowed, try to only accept GET requests
+- Handle HTTP REQUEST METHODS inside each method, so for example, if only a method GET allowed, try to only accept GET requests
 
 Example:
 
