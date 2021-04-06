@@ -15,8 +15,6 @@ Includes a Docker YAML file to start 2 containers
 
 ---
 
----
-
 ## Environment Setup
 
 ### Step 1
@@ -33,6 +31,21 @@ Edit **docker-compose.yml**
 - mysql > environment > MYSQL_PASSWORD: [YOUR_DB_PASSWORD]
 
 ### Step 2
+
+Check src working directory on **web** container:
+
+```
+...
+
+volumes:
+	- ./api/:/var/www/html/
+
+...
+```
+
+**src** directory is where te **Apiology Framework** will sit
+
+### Step 3
 
 Setup Docker:
 
@@ -51,6 +64,4 @@ docker-compose up -d
 
 ---
 
----
-
-## Framework reference
+## Framework
