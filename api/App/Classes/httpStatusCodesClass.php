@@ -19,15 +19,8 @@ Class HTTP {
 			case 201:
 				header("HTTP/1.1 201 Created");
 			break;
-			
-			case 202:
-			header("HTTP/1.1 202 Accepted");
-			break;
 			case 204:
 				header("HTTP/1.1 204 No Content");
-			break;
-			case 304:
-				header("HTTP/1.1 304 Not Modified");
 			break;
 			case 400:
 				header("HTTP/1.1 400 Bad Request");
@@ -40,15 +33,6 @@ Class HTTP {
 			break;
 			case 404:
 				header("HTTP/1.1 404 Not Found");
-			break;
-			case 406:
-				header("HTTP/1.1 406 Not Acceptable");
-			break;
-			case 408:
-				header("HTTP/1.1 408 Request Timeout");
-			break;
-			case 409:
-				header("HTTP/1.1 409 Conflict");
 			break;
 			
 			default:
