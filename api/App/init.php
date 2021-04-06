@@ -18,7 +18,7 @@ class Init extends HTTP
 		$this->request_uri = $_SERVER['REQUEST_URI'];
 		if($this->request_uri === '/')
 		{
-			$this->http_status_code = 406;
+			$this->http_status_code = 404;
 			
 			$this->http_response['status_code'] = $this->http_status_code;
 			$this->http_response['response'] = 'No Resource found, please enter a resource';
