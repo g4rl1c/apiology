@@ -24,7 +24,7 @@ class Init extends HTTP
 			$this->http_response['response'] = 'No Resource found, please enter a resource';
 
 			parent::setHeader($this->http_status_code);
-			print(json_encode($this->http_response, JSONPRETTY_PRINT));
+			print(json_encode($this->http_response, JSON_PRETTY_PRINT));
 		}
 		else
 		{
