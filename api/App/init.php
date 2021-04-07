@@ -18,13 +18,7 @@ class Init extends HTTP
 		$this->request_uri = $_SERVER['REQUEST_URI'];
 		if($this->request_uri === '/')
 		{
-			$this->http_status_code = 404;
-			
-			$this->http_response['status_code'] = $this->http_status_code;
-			$this->http_response['response'] = 'No Resource found, please enter a resource';
-
-			parent::setHeader($this->http_status_code);
-			print(json_encode($this->http_response, JSON_PRETTY_PRINT));
+			parent::jsonResponse(200, 'Welcome to apiology!');
 		}
 		else
 		{
@@ -65,19 +59,13 @@ class Init extends HTTP
 						}
 					}
 				} else {
-					$this->http_response['status_code'] = 404;
-					$this->http_response['response'] = 'No Resource found, METHOD';
-					parent::setHeader($this->http_response['status_code']);
-					print(json_encode($this->http_response, JSON_PRETTY_PRINT));
+					parent::jsonResponse(404, 'No Child Resource found, please enter a valid child resource');
 				}
 			}
 		}
 		else
 		{
-			$this->http_response['status_code'] = 404;
-			$this->http_response['response'] = 'No Resource found, METHOD';
-			parent::setHeader($this->http_response['status_code']);
-			print(json_encode($this->http_response, JSON_PRETTY_PRINT));
+			parent::jsonResponse(404, 'No Resource found, please enter a valid resource');
 		}
 	}
 

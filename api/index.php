@@ -6,11 +6,10 @@ header("Allow: GET, POST, PUT, DELETE");
 
 header('Content-Type: application/json');
 
-$method = $_SERVER['REQUEST_METHOD'];
-
 include_once './App/vendor/autoload.php';
 require_once 'App/init.php';
 
+// Namespace Constants
 define("APIOLOGY", "App/");
 define("RESOURCES", "App/Resources/");
 

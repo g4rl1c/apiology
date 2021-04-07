@@ -6,7 +6,17 @@ Class HTTP {
 	private $http_response = array();
 	private $http_status_code;
 
-	protected function setHeader($_code) {
+	protected function jsonResponse($_code, $_message){
+		$this->http_status_code = $_code;
+
+		$this->http_response['status_code'] = $this->http_status_code;
+		$this->http_response['response'] = $_message;
+
+		self::setHeader($this->http_status_code);
+		print(json_encode($this->http_response, JSON_PRETTY_PRINT));
+	}
+
+	private function setHeader($_code) {
 		self::httpStatusCode($_code);
 	}
 
@@ -18,6 +28,9 @@ Class HTTP {
 			break;
 			case 201:
 				header("HTTP/1.1 201 Created");
+			break;
+			case 202:
+				header("HTTP/1.1 202 Accepted");
 			break;
 			case 204:
 				header("HTTP/1.1 204 No Content");
@@ -33,6 +46,9 @@ Class HTTP {
 			break;
 			case 404:
 				header("HTTP/1.1 404 Not Found");
+			break;
+			case 406:
+				header("HTTP/1.1 406 Not Acceptable");
 			break;
 			
 			default:
