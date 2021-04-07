@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: dockerfile
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: web-container
+    depends_on:
+      - mysql
+    restart: always
+    volumes:
+      - ./api/:/var/www/html/
+    ports:
+      - 8010:80
+    links:
+      - mysql
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-container
+    restart: always
+    environment:
+      TZ: "America/NewYork"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: db_name
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+volumes:
+  mysql-data:
