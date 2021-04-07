@@ -66,6 +66,70 @@ docker-compose up -d
 
 ## Framework
 
+By default, there are 2 resources created
+
+1. App > Resources > test.php
+2. App > Resources > contact.php
+
+#### Description:
+
+Resources are named after the Class name, and this class has the following structure:
+
+```
+<?php
+namespace Apiology\Resources;
+
+// Headers Class
+use Apiology\Classes\{HTTP};
+
+// Resource / Class
+class Test extends HTTP {
+
+	// default resource, acts as a constructor
+	// responds to: domain.com/test
+	public function main()
+	{
+		// Condition as Request Method
+		if($_SERVER['REQUEST_METHOD'] == 'GET')
+		{
+			// Message in JSON
+			$this->arrayPost['status_code'] = 200; // HTTP Status Code
+			$this->arrayPost['response'] = "This resource exists"; // Return Message
+			parent::setHeader($this->arrayPost['status_code']); // Get HTTP Status Code from parent class
+			print(json_encode($this->arrayPost, JSON_PRETTY_PRINT)); // JSON
+		}
+	}
+
+	// Child resource
+	// responds to: domain.com/test/sample
+	public function sample(){
+		// Message in JSON
+		$this->arrayPost['status_code'] = 200; // HTTP Status Code
+		$this->arrayPost['response'] = "This resource exists"; // Return Message
+		parent::setHeader($this->arrayPost['status_code']); // Get HTTP Status Code from parent class
+		print(json_encode($this->arrayPost, JSON_PRETTY_PRINT)); // JSON
+	}
+
+	// Child resource with arguments
+	// responds to: domain.com/test/sample-two/param1/param2/param3
+	public function sample-two()
+ 	{
+
+			foreach(func_get_args() as $value){
+				$v = $value;
+			}
+
+			// Message in JSON
+			$this->arrayPost['status_code'] = 200; // HTTP Status Code
+			$this->arrayPost['response'] = var_dump($v); // Return Message
+			parent::setHeader($this->arrayPost['status_code']); // Get HTTP Status Code from parent class
+			print(json_encode($this->arrayPost, JSON_PRETTY_PRINT)); // JSON
+ 	}
+}
+```
+
+### Create a Resource
+
 ### HTTP METHODS
 
 The HTTP Methods allowed yet are:
@@ -84,7 +148,11 @@ The HTTP Methods allowed yet are:
 - 201:
   - Method/s: POST
   - Message: Created
-  - Reference: When POST
+  - Reference: To be used with DB and save data
+- 202:
+  - Method/s: POST
+  - Message: Accepted
+  - Reference: To send POST values
 - 204:
   - Method/s: GET, POST, PUT, DELETE
   - Message: No Content
@@ -92,7 +160,7 @@ The HTTP Methods allowed yet are:
 - 400:
   - Method/s: GET, POST, PUT, DELETE
   - Message: Bad Request
-  - Reference: When the resource does not exist
+  - Reference: When the resource does not exist or the request is unacceptable
 - 401:
   - Method/s: GET, POST, PUT, DELETE
   - Message: Unauthorized
@@ -103,5 +171,9 @@ The HTTP Methods allowed yet are:
   - Reference: Requires an extra **header** to access this resource
 - 404:
   - Method/s: GET, POST, PUT, DELETE
-  - Message: Forbidden
-  - Reference: Requires an extra **header** to access this resource
+  - Message: NOT FOUND
+  - Reference: No Resurce Found
+- 406:
+  - Method/s: POST, PUT, DELETE
+  - Message: Not Acceptable
+  - Reference: The resource return an Error
