@@ -13,12 +13,21 @@ class Init extends HTTP
 	private $file;
 	private $resource;
 	private $sub_resource = array();
+	private $request_method = array();
 
 	public function __construct(){
 		$this->request_uri = $_SERVER['REQUEST_URI'];
+		$this->request_method = $_SERVER['REQUEST_METHOD'];
+
+		// Check if the Server's Request Method is GET
+		// If not, sent them a 400 HTTP status Code
 		if($this->request_uri === '/')
 		{
-			parent::jsonResponse(200, 'Welcome to apiology!');
+			if($this->request_method === 'GET'){
+				parent::jsonResponse(200, 'Welcome to apiology!');
+			} else {
+				parent::jsonResponse(400, 'Please check your code');
+			}
 		}
 		else
 		{

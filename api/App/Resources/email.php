@@ -18,9 +18,12 @@ class Email extends HTTP {
 		{
 			// Message in JSON
 			parent::jsonResponse(200, 'This test resource exists!');
+
 		} else if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
 			$_POST = json_decode(file_get_contents("php://input"),true);
 			parent::jsonResponse(202, htmlspecialchars($_POST["key"]));
+
 		}
 	}
 
@@ -57,9 +60,7 @@ class Email extends HTTP {
 				$mail->send();
 				parent::jsonResponse(202, 'Email Sent!');
 
-		} catch (Exception $e) {
-				// echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-				
+		} catch (Exception $e) {				
 				parent::jsonResponse(406, 'Not Acceptable, Mail generated an ERROR and could not be sent: ' . $mail->ErrorInfo);
 
 		}

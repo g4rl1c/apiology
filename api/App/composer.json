@@ -5,8 +5,7 @@
 	},
 	"authors": [
 		{
-			"name": "gorka-lab",
-			"email": "dev@bytelab.cl"
+			"name": "gorka-lab"
 		}
 	],
 	"autoload": {
