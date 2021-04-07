@@ -21,7 +21,6 @@ class Email extends HTTP {
 		} else if($_SERVER['REQUEST_METHOD'] === 'POST'){
 			$_POST = json_decode(file_get_contents("php://input"),true);
 			parent::jsonResponse(202, htmlspecialchars($_POST["key"]));
-			// self::contactForm(htmlspecialchars($_POST["name"]), htmlspecialchars($_POST["email"]), htmlspecialchars($_POST["message"]));
 		}
 	}
 
@@ -63,6 +62,6 @@ class Email extends HTTP {
 				
 				parent::jsonResponse(406, 'Not Acceptable, Mail generated an ERROR and could not be sent: ' . $mail->ErrorInfo);
 
-
+		}
 	}
 }
