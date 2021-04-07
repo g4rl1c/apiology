@@ -28,5 +28,7 @@ services:
       MYSQL_PASSWORD: db_password
     volumes:
       - mysql-data:/var/lib/mysql
+    ports:
+      - 6359:3306
 volumes:
   mysql-data:
