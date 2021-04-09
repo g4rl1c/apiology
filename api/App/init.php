@@ -47,7 +47,7 @@ class Init extends HTTP
 			//Convert URI array into string
 			$this->request_uri = self::uriImplode($this->request_uri);
 
-			self::getResource(self::getURI($this->request_uri));
+			self::getResource($this->request_uri);
 		}
 	}
 
