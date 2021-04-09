@@ -29,6 +29,10 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     ports:
+<<<<<<< HEAD
       - 3603:3306
+=======
+      - 3336:3306
+>>>>>>> 202a6a16c0bd8859b8ee0e4be763490be855482a
 volumes:
   mysql-data:
