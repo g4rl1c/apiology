@@ -5,19 +5,19 @@ services:
       context: .
       dockerfile: dockerfile
     command: --default-authentication-plugin=mysql_native_password
-    container_name: web-container
+    container_name: apiology-web-container
     depends_on:
       - mysql
     restart: always
     volumes:
       - ./api/:/var/www/html/
     ports:
-      - 8010:80
+      - 8090:80
     links:
       - mysql
   mysql:
     image: mysql:5.7
-    container_name: mysql-container
+    container_name: apiology-mysql-container
     restart: always
     environment:
       TZ: "America/NewYork"
@@ -28,5 +28,7 @@ services:
       MYSQL_PASSWORD: db_password
     volumes:
       - mysql-data:/var/lib/mysql
+    ports:
+      - 3603:3306
 volumes:
   mysql-data:
