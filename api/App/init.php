@@ -31,12 +31,36 @@ class Init extends HTTP
 		}
 		else
 		{
-			self::getResource(self::getURI($this->request_uri));
+			// Convert to Array and Getting rid of the slash (/)
+			$this->request_uri = self::uriExplodeSlash($this->request_uri);
+
+			// Array as String
+			$this->request_uri = self::uriImplode($this->request_uri);
+
+			// Convert to Array and Getting rid of the hyphens (-)
+			$this->request_uri = self::uriExplodeHyphen($this->request_uri);
+
+			for($i=0; $i < count($this->request_uri); $i++){
+				$this->request_uri[$i] = ucfirst($this->request_uri[$i]);
+			}
+
+			//Convert URI array into string
+			$this->request_uri = self::uriImplode($this->request_uri);
+
+			self::getResource($this->request_uri);
 		}
 	}
 
-	private function getURI($_uri){
+	private function uriExplodeSlash($_uri){
 		return explode('/', filter_var(trim($_uri, '/'), FILTER_SANITIZE_URL));
+	}
+
+	private function uriExplodeHyphen($_uri){
+		return explode('-', $_uri);
+	}
+
+	private function uriImplode($_uri){
+		return implode($_uri);
 	}
 
 	private function getResource($_resource){
@@ -44,7 +68,7 @@ class Init extends HTTP
 		if(file_exists($this->file))
 		{
 			require $this->file;
-			$this->resource = ucfirst($_resource[0]);
+			$this->resource = $_resource[0];
 			$this->resource = "Apiology\\Resources\\{$this->resource}";
 			$this->resource = new $this->resource();
 
