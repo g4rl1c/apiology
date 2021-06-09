@@ -12,7 +12,7 @@ services:
     volumes:
       - ./api/:/var/www/html/
     ports:
-      - 8090:80
+      - 8000:80
     links:
       - mysql
   mysql:

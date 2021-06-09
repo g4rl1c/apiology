@@ -5,11 +5,12 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Allow: GET, POST, PUT, DELETE");
 header('Content-Type: application/json');
 
-include_once './App/vendor/autoload.php';
+include_once 'vendor/autoload.php';
 require_once 'App/init.php';
 
 // Namespace Constants
 define("APIOLOGY", "App/");
+define("CLASSES", "App/Classes/");
 define("RESOURCES", "App/Resources/");
 
 new Apiology\Init();

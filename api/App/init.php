@@ -4,18 +4,23 @@ namespace Apiology;
 
 require_once 'Classes/httpStatusCodesClass.php';
 
-use Apiology\Classes\{HTTP};
+use Apiology\Classes\HTTP;
 
-class Init extends HTTP
+class Init
 {
 	private $request_uri;
 	private $request_method;
 	private $file;
 	private $resource;
+	private $http_response;
 
 	// constructor
 	public function __construct()
 	{
+		// Call the HTTP Class to emmit http responses and headers
+
+		$this->http_response = new HTTP();
+
 		// get Server request URI
 		$this->request_uri = $_SERVER['REQUEST_URI'];
 		// get Server Request Method
@@ -29,7 +34,7 @@ class Init extends HTTP
 			switch ($this->request_uri) {
 					// Empty path == root
 				case empty($this->request_uri[0]):
-					parent::httpJsonResponse(200, "Welcome to Apiology!");
+					$this->http_response->httpJsonResponse(200, "Welcome to Apiology!");
 					break;
 					// Path with a resource and possible arguments
 				case !empty($this->request_uri[0]):
@@ -43,11 +48,13 @@ class Init extends HTTP
 
 	private function httpJsonResponseNotFound()
 	{
-		parent::httpJsonResponse(404, "Sorry!. Resource not be found");
+		$this->http_response = new HTTP();
+		$this->http_response->httpJsonResponse(404, "Sorry!. Resource not be found");
 	}
 
 	private function getResource($_resource)
 	{
+		$this->http_response = new HTTP();
 		$this->file = RESOURCES . trim(strtolower($_resource[0])) . ".php";
 		if (file_exists($this->file)) {
 			require $this->file;
@@ -59,7 +66,7 @@ class Init extends HTTP
 				if (method_exists($this->resource, $_resource[1]) && is_callable($_resource[1], true, $method)) {
 					$this->resource->$method(array_splice($_resource, 2));
 				} else {
-					parent::httpJsonResponse(404, $method);
+					$this->http_response->httpJsonResponse(404, $method);
 				}
 			} else {
 				$this->httpJsonResponseNotFound();

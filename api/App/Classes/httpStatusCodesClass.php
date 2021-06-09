@@ -8,7 +8,7 @@ class HTTP
 	private $http_status_code;
 
 	// HTTP JSON Response | int, string, array/object
-	protected function httpJsonResponse($_status, $_message, $data = null)
+	public function httpJsonResponse($_status, $_message, $data = null)
 	{
 		self::httpStatusCode($_status);
 		$this->http_response['status'] = $_status;
