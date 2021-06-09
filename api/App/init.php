@@ -1,112 +1,71 @@
 <?php
+
 namespace Apiology;
 
 require_once 'Classes/httpStatusCodesClass.php';
+
 use Apiology\Classes\{HTTP};
 
 class Init extends HTTP
 {
-
-	private $http_response = array();
-	private $http_status_code;
 	private $request_uri;
+	private $request_method;
 	private $file;
 	private $resource;
-	private $sub_resource = array();
-	private $request_method = array();
 
-	public function __construct(){
-		$this->request_uri = $_SERVER['REQUEST_URI'];
-		$this->request_method = $_SERVER['REQUEST_METHOD'];
-
-		// Check if the Server's Request Method is GET
-		// If not, sent them a 400 HTTP status Code
-		if($this->request_uri === '/')
-		{
-			if($this->request_method === 'GET'){
-				parent::jsonResponse(200, 'Welcome to apiology!');
-			} else {
-				parent::jsonResponse(400, 'Please check your code');
-			}
-		}
-		else
-		{
-			// Convert to Array and Getting rid of the slash (/)
-			$this->request_uri = self::uriExplodeSlash($this->request_uri);
-
-			// Array as String
-			$this->request_uri = self::uriImplode($this->request_uri);
-
-			// Convert to Array and Getting rid of the hyphens (-)
-			$this->request_uri = self::uriExplodeHyphen($this->request_uri);
-
-			for($i=0; $i < count($this->request_uri); $i++){
-				$this->request_uri[$i] = ucfirst($this->request_uri[$i]);
-			}
-
-			//Convert URI array into string
-			$this->request_uri = self::uriImplode($this->request_uri);
-
-			self::getResource($this->request_uri);
-		}
-	}
-
-	private function uriExplodeSlash($_uri){
-		return explode('/', filter_var(trim($_uri, '/'), FILTER_SANITIZE_URL));
-	}
-
-	private function uriExplodeHyphen($_uri){
-		return explode('-', $_uri);
-	}
-
-	private function uriImplode($_uri){
-		return implode($_uri);
-	}
-
-	private function getResource($_resource){
-		$this->file = RESOURCES . $_resource[0] . '.php';
-		if(file_exists($this->file))
-		{
-			require $this->file;
-			$this->resource = $_resource[0];
-			$this->resource = "Apiology\\Resources\\{$this->resource}";
-			$this->resource = new $this->resource();
-
-			if(count($_resource) === 1)
-			{
-				$this->resource->main();
-			}
-			else
-			{
-				if(count($_resource) > 1)
-				{
-					if(method_exists($this->resource, $_resource[1]) && is_callable($_resource[1], true, $method))
-					{
-						if(count($_resource) > 3)
-						{
-							$this->resource->$method(self::get_subresources($_resource));
-						} 
-						else
-						{
-							$this->resource->$method();
-						}
-					}
-				} else {
-					parent::jsonResponse(404, 'No Child Resource found, please enter a valid child resource');
-				}
-			}
-		}
-		else
-		{
-			parent::jsonResponse(404, 'No Resource found, please enter a valid resource');
-		}
-	}
-
-	private function get_subresources($_subresources)
+	// constructor
+	public function __construct()
 	{
-		$this->sub_resource = array_splice($_subresources, 2);
+		// get Server request URI
+		$this->request_uri = $_SERVER['REQUEST_URI'];
+		// get Server Request Method
+		$this->request_method = $_SERVER['REQUEST_METHOD'];
+		// Explode Request URI
+		$this->request_uri = explode('/', filter_var(trim($this->request_uri, '/'), FILTER_SANITIZE_URL));
 
-		return $this->sub_resource;
+		// only Accept GET Method here
+		if ($this->request_method == 'GET') {
+			// Check path from URI
+			switch ($this->request_uri) {
+					// Empty path == root
+				case empty($this->request_uri[0]):
+					parent::httpJsonResponse(200, "Welcome to Apiology!");
+					break;
+					// Path with a resource and possible arguments
+				case !empty($this->request_uri[0]):
+					$this->getResource($this->request_uri);
+					break;
+			}
+		} else {
+			$this->httpJsonResponseNotFound();
+		}
 	}
 
+	private function httpJsonResponseNotFound()
+	{
+		parent::httpJsonResponse(404, "Sorry!. Resource not be found");
+	}
+
+	private function getResource($_resource)
+	{
+		$this->file = RESOURCES . trim(strtolower($_resource[0])) . ".php";
+		if (file_exists($this->file)) {
+			require $this->file;
+			$this->resource = trim(ucfirst($_resource[0]));
+			$this->resource = "Apiology\\Resources\\{$this->resource}";
+
+			if (count($_resource) > 1) {
+				$this->resource = new $this->resource();
+				if (method_exists($this->resource, $_resource[1]) && is_callable($_resource[1], true, $method)) {
+					$this->resource->$method(array_splice($_resource, 2));
+				} else {
+					parent::httpJsonResponse(404, $method);
+				}
+			} else {
+				$this->httpJsonResponseNotFound();
+			}
+		} else {
+			$this->httpJsonResponseNotFound();
+		}
+	}
 }
