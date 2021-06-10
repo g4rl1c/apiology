@@ -1,5 +1,5 @@
 {
-	"name": "apiology",
+	"name": "gorka-lab/apiology",
 	"require": {
 		"phpmailer/phpmailer": "^6.3"
 	},

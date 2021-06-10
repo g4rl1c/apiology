@@ -24,8 +24,12 @@ class ComposerStaticInitfd4549f9d605efbe038d22e748fdffbf
         ),
         'Apiology\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/Classes',
+            0 => __DIR__ . '/../..' . '/App',
         ),
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -33,6 +37,7 @@ class ComposerStaticInitfd4549f9d605efbe038d22e748fdffbf
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitfd4549f9d605efbe038d22e748fdffbf::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitfd4549f9d605efbe038d22e748fdffbf::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitfd4549f9d605efbe038d22e748fdffbf::$classMap;
 
         }, null, ClassLoader::class);
     }
