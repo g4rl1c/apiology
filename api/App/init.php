@@ -2,7 +2,7 @@
 
 namespace Apiology;
 
-require_once 'Classes/httpStatusCodesClass.php';
+require 'Classes/http.php';
 
 use Apiology\Classes\HTTP;
 
@@ -28,8 +28,8 @@ class Init
 		// Explode Request URI
 		$this->request_uri = explode('/', filter_var(trim($this->request_uri, '/'), FILTER_SANITIZE_URL));
 
-		// only Accept GET Method here
-		if ($this->request_method == 'GET') {
+		// only Accept GET, POST, PUT and DELETE Methods here
+		if ($this->request_method == 'GET' || $this->request_method == 'POST' || $this->request_method == 'PUT' || $this->request_method == 'DELETE') {
 			// Check path from URI
 			switch ($this->request_uri) {
 					// Empty path == root

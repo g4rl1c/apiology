@@ -2,19 +2,25 @@
 
 namespace Apiology\Classes;
 
-class HTTP
+class Http
 {
 	private $http_response = array();
-	private $http_status_code;
 
 	// HTTP JSON Response | int, string, array/object
 	public function httpJsonResponse($_status, $_message, $data = null)
 	{
 		self::httpStatusCode($_status);
+		// header("Access-Control-Allow-Origin: https://gotransfermontreal.com");
+		// header(
+		// 	"Access-Control-Allow-Headers: x-gtm-key, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method"
+		// );
+		// header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+		// header("Allow: GET, POST, PUT, DELETE");
+		header('Content-Type: application/json');
 		$this->http_response['status'] = $_status;
 		$this->http_response['message'] = $_message;
 		if ($data != null) {
-			$this->http_response['data'] = $data;
+			$this->http_response['response'] = $data;
 		}
 		print(json_encode($this->http_response, JSON_PRETTY_PRINT));
 	}
@@ -32,9 +38,6 @@ class HTTP
 			case 202:
 				header("HTTP/1.1 202 Accepted");
 				break;
-			case 204:
-				header("HTTP/1.1 204 No Content");
-				break;
 			case 400:
 				header("HTTP/1.1 400 Bad Request");
 				break;
@@ -49,6 +52,9 @@ class HTTP
 				break;
 			case 406:
 				header("HTTP/1.1 406 Not Acceptable");
+				break;
+			case 503:
+				header("HTTP/1.1 503 Service Unavailable");
 				break;
 
 			default:
