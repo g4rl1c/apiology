@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
-    'Apiology\\' => array($baseDir . '/App'),
+    'Apiology\\Apiology\\' => array($baseDir . '/apiology'),
 );

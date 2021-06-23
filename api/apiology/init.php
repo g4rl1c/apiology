@@ -1,18 +1,13 @@
 <?php
 
-namespace Apiology;
+namespace Apiology\Apiology;
 
-require 'Classes/http.php';
-
-use Apiology\Classes\HTTP;
+use Apiology\Apiology\classes\http as HTTP;
+// use Apiology\Apiology\resources\http as HTTP;
 
 class Init
 {
-	private $request_uri;
-	private $request_method;
-	private $file;
-	private $resource;
-	private $http_response;
+
 
 	// constructor
 	public function __construct()
@@ -42,37 +37,30 @@ class Init
 					break;
 			}
 		} else {
-			$this->httpJsonResponseNotFound();
+			$this->http_response->httpJsonResponse(403, "Sorry!. You have a Bad Request");
 		}
-	}
-
-	private function httpJsonResponseNotFound()
-	{
-		$this->http_response = new HTTP();
-		$this->http_response->httpJsonResponse(404, "Sorry!. Resource not be found");
 	}
 
 	private function getResource($_resource)
 	{
-		$this->http_response = new HTTP();
-		$this->file = RESOURCES . trim(strtolower($_resource[0])) . ".php";
+		$this->file = "apiology/resources/" . trim(strtolower($_resource[0])) . ".php";
 		if (file_exists($this->file)) {
 			require $this->file;
 			$this->resource = trim(ucfirst($_resource[0]));
-			$this->resource = "Apiology\\Resources\\{$this->resource}";
+			$this->resource = "Apiology\\Apiology\\resources\\{$this->resource}";
 
 			if (count($_resource) > 1) {
 				$this->resource = new $this->resource();
 				if (method_exists($this->resource, $_resource[1]) && is_callable($_resource[1], true, $method)) {
 					$this->resource->$method(array_splice($_resource, 2));
 				} else {
-					$this->http_response->httpJsonResponse(404, $method);
+					$this->http_response->httpJsonResponse(404, "Sorry!. Child Resource not found");
 				}
 			} else {
-				$this->httpJsonResponseNotFound();
+				$this->http_response->httpJsonResponse(403, "Sorry!. You have a Bad Request");
 			}
 		} else {
-			$this->httpJsonResponseNotFound();
+			$this->http_response->httpJsonResponse(404, "Sorry!. Nothing found here");
 		}
 	}
 }
