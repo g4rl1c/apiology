@@ -10,12 +10,6 @@ class Http
 	public function httpJsonResponse($_status, $_message, $data = null)
 	{
 		self::httpStatusCode($_status);
-		// header("Access-Control-Allow-Origin: https://gotransfermontreal.com");
-		// header(
-		// 	"Access-Control-Allow-Headers: x-gtm-key, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method"
-		// );
-		// header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
-		// header("Allow: GET, POST, PUT, DELETE");
 		header('Content-Type: application/json');
 		$this->http_response['status'] = $_status;
 		$this->http_response['message'] = $_message;
