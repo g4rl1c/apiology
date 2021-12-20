@@ -1,12 +1,24 @@
-# APIOLOGY - PHP API FRAMEWORK
+<?php
 
-## Setup
+namespace Apiology\Apiology\Version;
 
-- Create a function inside v*.php (where * means number of the version)
-- Add Function Name in v\*.php with the following code in it
+// Headers Class
+use Apiology\Apiology\classes\core\http as HTTP;
 
-```php
-$this->http_response = new HTTP();
+// Resource / Class
+class V2
+{
+
+    private $response = array();
+
+    public function __construct()
+    {
+        return true;
+    }
+
+    public function sample($_data)
+    {
+        $this->http_response = new HTTP();
         // temp variable "$function" remove in production
         // true => simple algorithm inside the function with a http message in return
         // false => calls module -> class -> function
@@ -29,6 +41,5 @@ $this->http_response = new HTTP();
                 $module->sample($_data);
             }
         }
-```
-
-- Add the name of the method to be called in v\*.php in line 41
+    }
+}

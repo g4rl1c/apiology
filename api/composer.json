@@ -1,0 +1,20 @@
+{
+    "name": "apiology/apiology",
+    "description": "php api framework",
+    "type": "framework",
+    "require": {
+        "phpmailer/phpmailer": "^6.5"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Apiology\\Apiology\\": "apiology/"
+        }
+    },
+    "authors": [
+        {
+            "name": "gorka-lab",
+            "email": "dev@algorithmlab.co"
+        }
+    ]
+}
