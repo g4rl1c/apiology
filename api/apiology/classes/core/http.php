@@ -1,6 +1,6 @@
 <?php
 
-namespace Apiology\Apiology\Classes;
+namespace Apiology\Apiology\Classes\Core;
 
 class Http
 {

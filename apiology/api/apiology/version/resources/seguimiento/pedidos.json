@@ -1,0 +1,20 @@
+{
+    "pedidos": [
+        {
+            "id": "1546",
+            "agency": "starken",
+            "order": "956789"
+        },
+        {
+            "id": "1547",
+            "agency": "inhouse",
+            "status": "En Ruta",
+            "history": [
+                {
+                    "timestamp": "20-12-2021 18:30:00",
+                    "status": "En preparacion"
+                }
+            ]
+        }
+    ]
+}
