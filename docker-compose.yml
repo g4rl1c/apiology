@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    container_name: apiology-container
+    container_name: apiology-web-container
     restart: always
     volumes:
       - ./api/:/var/www/html/
